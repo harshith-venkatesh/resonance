@@ -13,7 +13,7 @@ interface MenuItem {
   title: string;
   icon: LucideIcon;
   url?: string;
-  onCLick?: () => void;
+  onClick?: () => void;
 }
 
 interface NavSectionProps {
@@ -30,16 +30,16 @@ function NavSection({ label, items, pathname }: NavSectionProps) {
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title} >
-              <SidebarMenuButton asChild={!!item.url} onClick={item.onCLick} isActive={item.url ? item.url === '/' ? pathname === '/' : pathname.startsWith(item.url) : false}>
+              <SidebarMenuButton asChild={!!item.url} onClick={item.onClick} isActive={item.url ? item.url === '/' ? pathname === '/' : pathname.startsWith(item.url) : false} tooltip={item.title}>
               {item.url ? (
-                <Link href={item.url} className="flex items-center gap-2">
-                  <item.icon className="w-4 h-4" />
-                  {item.title}
+                <Link href={item.url}>
+                  <item.icon />
+                  <span>{item.title}</span>
                 </Link>
               ) : (
                 <div className="flex items-center gap-2">
-                  <item.icon className="w-4 h-4" />
-                  {item.title}
+                  <item.icon  />
+                 <span> {item.title}</span>
                 </div>
               )}
               </SidebarMenuButton>
@@ -60,13 +60,12 @@ export function DashboardSidebar() {
     { title: "Dashboard", icon: Home, url: "/" },
     { title: "Explore Voices", icon: LayoutGrid, url: "/voices" },
     { title: "Text to Speech", icon: AudioLines, url: "/text-to-speech" },
-    { title: "Voice Cloning", icon: Volume2, url: "/voice-cloning" },
+    { title: "Voice Cloning", icon: Volume2 },
     
   ];
 
   const othersMenuItems: MenuItem[] = [
-    { title: "Settings", icon: Settings, onCLick: () => clerk.openOrganizationProfile() },
-    { title: "Account", icon: Headphones, url: "/dashboard/account" },
+    { title: "Settings", icon: Settings, onClick: () => clerk.openOrganizationProfile() },
     { title: "Help and Support", icon: Headphones, url: "mailto:harshith.venkatesh6@gmail.com" },
   ];
 
@@ -76,21 +75,21 @@ export function DashboardSidebar() {
         <SidebarHeader className="flex flex-col gap-4 pt-2">
           <div className="flex items-center gap-2 pl-1 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:pl-0">
 
-            <Image src="/logo.png" alt="Logo" width={24} height={24} className="rounded-sm" />
-            <span className="font-semibold text-lg tracking-lighter text-foreground hidden group-data-[collapsible=icon]:hidden">
+            <Image src="/logo.svg" alt="Logo" width={24} height={24} className="rounded-sm" />
+            <span className="font-semibold text-lg tracking-lighter text-foreground group-data-[collapsible=icon]:hidden">
               Resonance
             </span>
-            <SidebarTrigger className="absolute right-2 top-2  ml-auto lg:hidden" />
+            <SidebarTrigger className="ml-auto lg:hidden" />
           </div>
 
         </SidebarHeader>
-        <SidebarContent></SidebarContent>
+        <SidebarContent>
+          <NavSection items={mainMenuItems} pathname={pathname} />
+          <NavSection label="Others" items={othersMenuItems} pathname={pathname} />
+        </SidebarContent>
           
         </SidebarInset>
-        <SidebarFooter>
-            <OrganizationSwitcher />
-            <UserButton />
-        </SidebarFooter>
+       
     </Sidebar>
   );
 }
