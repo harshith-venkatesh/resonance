@@ -1,15 +1,18 @@
 import {cookies} from "next/headers";
 import {SidebarInset, SidebarProvider} from "@/components/ui/sidebar";
+import { DashboardSidebar } from "@/features/dashboard/components/dashboard-sidebar";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   
-
+    const cookieStore = await cookies();
+    const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
   return (
-    <SidebarProvider defaultOpen={true} className="flex min-h-screen h-screen">
+    <SidebarProvider defaultOpen={defaultOpen} className="flex min-h-screen h-screen">
+      <DashboardSidebar />
       <div className="flex flex-1 min-h-screen">
         <SidebarInset className="min-h-0 min-w-0">
           <nav>Nav Page</nav>
