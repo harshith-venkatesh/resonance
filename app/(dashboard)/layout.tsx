@@ -9,11 +9,13 @@ export default function DashboardLayout({
   
 
   return (
-    <SidebarProvider>
-      <div className="flex h-screen"></div>
-        <SidebarInset orgId={"orgId"} />
-        <nav>Nav Page</nav>
-        <main className="flex-1">{children}</main> 
+    <SidebarProvider defaultOpen={true} className="flex min-h-screen h-screen">
+      <div className="flex flex-1 min-h-screen">
+        <SidebarInset className="min-h-0 min-w-0">
+          <nav>Nav Page</nav>
+        </SidebarInset>
+        <main className="flex-1 flex flex-col min-h-screen min-w-0">{children}</main>
+      </div>
     </SidebarProvider>
-    );
+  );
 }
