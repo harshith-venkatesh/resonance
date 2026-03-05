@@ -132,12 +132,13 @@ export function DashboardSidebar() {
           <span className="group-data-[collapsible=icon]:hidden font-semibold text-lg tracking-tighter text-foreground">
             Resonance
           </span>
-          <SidebarTrigger className="ml-auto lg:hidden" />
+          
         </div>
+        <SidebarTrigger />
         <SidebarMenu>
           <SidebarMenuItem>
             <OrganizationSwitcher
-              hidePersonal
+              hidePersonal={false}
               fallback={
                 <Skeleton
                   className="h-8.5 w-full group-data-[collapsible=icon]:size-8 rounded-md border bg-white"
@@ -175,7 +176,7 @@ export function DashboardSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <UserButton
-              showName 
+               
               fallback={
                 <Skeleton className="h-8.5 w-full group-data-[collapsible=icon]:size-8 rounded-md border border-border bg-white" />
               }
